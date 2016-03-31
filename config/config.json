@@ -1,0 +1,8 @@
+{
+    "dbPath": "mongodb://localhost/training_project",
+    "emailService": {
+        "providerApi": "sendgrid",
+        "username": "xxxxxxxxx",
+        "password": "XXXXXXXXX"
+    }
+}
