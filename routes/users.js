@@ -357,7 +357,7 @@ router.put('/favourites/markFav', function(req, res, next) {
 });
 
 /**
-@api {put} /users/favourites/unmarkFav Mark favourite posts
+@api {put} /users/favourites/unmarkFav unMark favourite posts
 @apiName PutFavouritesUnmark
 @apiGroup Users
 @apiSuccess {json} user updated user favourites.
