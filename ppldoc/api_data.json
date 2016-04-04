@@ -842,7 +842,7 @@
   {
     "type": "put",
     "url": "/users/favourites/unmarkFav",
-    "title": "Mark favourite posts",
+    "title": "unMark favourite posts",
     "name": "PutFavouritesUnmark",
     "group": "Users",
     "success": {
@@ -1017,10 +1017,10 @@
         "Success 200": [
           {
             "group": "Success 200",
-            "type": "json",
+            "type": "Boolean",
             "optional": false,
-            "field": "user",
-            "description": "<p>updated user information.</p>"
+            "field": "status",
+            "description": "<p>updated password status.</p>"
           }
         ]
       },
