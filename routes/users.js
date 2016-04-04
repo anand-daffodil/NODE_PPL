@@ -10,6 +10,17 @@ router.get('/', function(req, res, next) {
     res.render('index', { title: 'Express' });
 });
 
+/**
+@api {post} /users/register Register new user
+@apiName RegisterUser
+@apiGroup Users
+@apiDescription After successful registration send mail to the user
+@apiSuccess {json} user User information
+@apiError {Error} error Error message
+@apiSuccessExample {Boolean} Success-Response:
+true
+*/
+
 router.post('/register', function(req, res, next) {
     var data = req.body;
     usersApi.insert(data, function(err, data) {
@@ -40,6 +51,20 @@ router.post('/register', function(req, res, next) {
     });
 });
 
+/**
+@api {post} /users/login Authenticate user with passport
+@apiName UserLogin
+@apiGroup Users
+@apiSuccess {json} user User information
+@apiError {Error} error Error message
+@apiSuccessExample {json} Success-Response:
+{
+  "_id": "56c2aded22ee1b32272e40f8",
+  "email": "anand.yadav@daffodilsw.com",
+  "username": "sunilyadav"
+}
+*/
+
 router.post('/login',
     passport.authenticate('local'),
     function(req, res, next) {
@@ -62,6 +87,16 @@ router.post('/login',
         });
     });
 
+/**
+@api {get} /users/verifyUser/:email/:verificationCode Verify user
+@apiName GetVerificationCode
+@apiGroup Users
+@apiSuccess {boolean} verified Verification Status/redirect to 'resetPassword' page
+@apiError {Error} error Error message
+@apiDescription verification code to update the verification status,
+if user is verified, redirected to resetPassword page
+*/
+
 router.get('/verifyUser/:email/:verificationCode', function(req, res, next) {
     var data = { "email": req.params.email, "verificationCode": req.params.verificationCode };
     var toData = { $set: { verified: true } };
@@ -78,6 +113,18 @@ router.get('/verifyUser/:email/:verificationCode', function(req, res, next) {
         }
     });
 });
+
+/**
+@api {post} /users/forgotPassword/:emailId Forgot password 
+@apiName ResetPasswordLink
+@apiGroup Users
+@apiSuccess {String} message Verification mail sent to the user's registered email
+@apiError {Error} error Error message
+@apiDescription Verification mail sent to the user with a link to update the verification status,
+if user is verified then user is redirected to resetPassword page.
+@apiSuccessExample {String} Success-Response:
+verification mail sent.
+*/
 
 router.post('/forgotPassword/:emailId', function(req, res, next) {
 
@@ -114,6 +161,20 @@ router.post('/forgotPassword/:emailId', function(req, res, next) {
 
 });
 
+/**
+@api {post} /users/resetPassword/:emailId Reset password 
+@apiName PostNewPassword
+@apiGroup Users
+@apiSuccess {json} updateStatus update operation result if record modified.
+@apiError {Error} error Error message
+@apiSuccessExample {json} Success-Response:
+{
+  "ok": 1,
+  "nModified": 1,
+  "n": 1
+}
+*/
+
 router.post('/resetPassword/:emailId', function(req, res, next) {
     var data = { 'email': req.params.emailId, 'verified': true };
     var newPassword = req.body.newPassword;
@@ -136,6 +197,32 @@ router.post('/resetPassword/:emailId', function(req, res, next) {
     });
 });
 
+/**
+@api {get} /users/userInfo/:userId User detail 
+@apiName GetUser
+@apiGroup Users
+@apiSuccess {json} user User information.
+@apiError {Error} error Error message
+@apiSuccessExample {json} Success-Response:
+{
+  "verification_code": "56c2aded22ee1b32272e40f7",
+  "reset_pass_token": "56c2aded22ee1b32272e40f7",
+  "__v": 0,
+  "favourites": [
+    "56c5c2bbc04a005b215e1d5c",
+    "56c6b0a559f0dc4b10ac212f",
+    "56c6915e17c602d40a7a0f88"
+  ],
+  "role": "user",
+  "lastName": "yadav",
+  "firstName": "sunil",
+  "gender": "M",
+  "mobile": "8054455553",
+  "email": "anand.yadav@daffodilsw.com",
+  "username": "sunilyadav"
+}
+*/
+
 router.get('/userInfo/:userId', function(req, res, next) {
     var query = { _id: req.params.userId };
     var projection = { _id: 0, password: 0, verified: 0, verificationCode: 0, resetPasswordToken: 0 };
@@ -154,6 +241,32 @@ router.get('/userInfo/:userId', function(req, res, next) {
         }
     });
 });
+
+/**
+@api {put} /users/updateInfo/:userId Update user detail 
+@apiName PutUserDetail
+@apiGroup Users
+@apiSuccess {json} user updated user information.
+@apiError {Error} error Error message
+@apiSuccessExample {json} Success-Response:
+{
+  "verification_code": "56c2aded22ee1b32272e40f7",
+  "reset_pass_token": "56c2aded22ee1b32272e40f7",
+  "__v": 0,
+  "favourites": [
+    "56c5c2bbc04a005b215e1d5c",
+    "56c6b0a559f0dc4b10ac212f",
+    "56c6915e17c602d40a7a0f88"
+  ],
+  "role": "user",
+  "lastName": "yadav",
+  "firstName": "sunny",
+  "gender": "M",
+  "mobile": "8054455553",
+  "email": "anand.yadav@daffodilsw.com",
+  "username": "sunilyadav"
+}
+*/
 
 router.put('/updateInfo/:userId', function(req, res, next) {
     var query = { _id: req.params.userId };
@@ -187,6 +300,16 @@ router.put('/updateInfo/:userId', function(req, res, next) {
     });
 });
 
+/**
+@api {post} /users/changePassword Update user password 
+@apiName UpdatePassword
+@apiGroup Users
+@apiSuccess {Boolean} status updated password status.
+@apiError {Error} error Error message
+@apiSuccessExample {Boolean} Success-Response:
+true
+*/
+
 router.post('/changePassword', function(req, res, next) {
     console.log("changing password");
     console.log(req.body);
@@ -204,7 +327,15 @@ router.post('/changePassword', function(req, res, next) {
     });
 });
 
-router.put('/markFav', function(req, res, next) {
+/**
+@api {put} /users/favourites/markFav Mark favourite posts
+@apiName PutFavouritesMark
+@apiGroup Users
+@apiSuccess {json} user updated user favourites.
+@apiError {Error} error Error message
+*/
+
+router.put('/favourites/markFav', function(req, res, next) {
     var query = { '_id': req.body.userId };
     var toData = { $addToSet: { favourites: req.body.postId } };
     var options = {};
@@ -225,7 +356,15 @@ router.put('/markFav', function(req, res, next) {
     });
 });
 
-router.put('/posts/unmarkFav', function(req, res, next) {
+/**
+@api {put} /users/favourites/unmarkFav Mark favourite posts
+@apiName PutFavouritesUnmark
+@apiGroup Users
+@apiSuccess {json} user updated user favourites.
+@apiError {Error} error Error message
+*/
+
+router.put('/favourites/unmarkFav', function(req, res, next) {
     var query = { '_id': req.body.userId };
     var toData = { $set: { $pull: { favourites: { $eq: req.body.postId } } } };
     options = { upsert: true };
@@ -247,6 +386,14 @@ router.put('/posts/unmarkFav', function(req, res, next) {
         }
     });
 });
+
+/**
+@api {get} /users/favourites/:userId Retrieve favourite posts
+@apiName GetFavourites
+@apiGroup Users
+@apiSuccess {json} favourites Array of favourite post.
+@apiError {Error} error Error message
+*/
 
 router.get('/favourites/:userId', function(req, res, next) {
     console.log("...fav...1");
