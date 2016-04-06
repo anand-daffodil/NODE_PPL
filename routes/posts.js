@@ -3,7 +3,7 @@ var router = express.Router();
 var postsApi = require('../api/posts');
 
 /**
-@api {post} /posts/registerPost Insert a new post
+@api {post} /posts/ Insert a new post
 @apiName InsertPost
 @apiGroup Posts
 @apiSuccess {JSON} post new created post
@@ -23,7 +23,7 @@ var postsApi = require('../api/posts');
 }
 */
 
-router.post('/registerPost', function(req, res, next) {
+router.post('/', function(req, res, next) {
     postsApi.insert(req.body, function(err, data) {
         if (err) {
             console.log("error is " + err.message);
@@ -36,7 +36,7 @@ router.post('/registerPost', function(req, res, next) {
 });
 
 /**
-@api {get} /posts/getPosts/:page Retrieve all posts by pages
+@api {get} /posts?page=page_no Retrieve all posts by pages
 @apiName GetAllPosts
 @apiGroup Posts
 @apiSuccess {json} posts An array of post
@@ -96,10 +96,10 @@ router.post('/registerPost', function(req, res, next) {
 ]
 */
 
-router.get('/getPosts/:page', function(req, res, next) {
+router.get('/', function(req, res, next) {
     var query = {};
     var projecion = {};
-    var options = { skip: req.params.page * 4, limit: 4 };
+    var options = { skip: req.query.page * 4, limit: 4 };
     postsApi.find(query, projecion, options, function(err, data) {
         if (err) {
             console.log("error in retrieving posts: " + err);
@@ -117,7 +117,7 @@ router.get('/getPosts/:page', function(req, res, next) {
 });
 
 /**
-@api {get} /posts/getPosts/:cat/:page Retrieve all posts by category and by pages
+@api {get} /posts/bycategory?cat=category&page=page_no Retrieve all posts by category and by pages
 @apiName GetAllPostsByCategory
 @apiGroup Posts
 @apiSuccess {json} posts An array of post
@@ -250,9 +250,9 @@ router.get('/getPosts/:page', function(req, res, next) {
 ]
 */
 
-router.get('/getPosts/:cat/:page', function(req, res, next) {
-    var query = { 'catType': req.params.cat };
-    var page = req.params.page;
+router.get('/bycategory', function(req, res, next) {
+    var query = { 'catType': req.query.cat };
+    var page = req.query.page;
     postsApi.find(query, {}, page, function(err, data) {
         if (err) {
             console.log("error retrieving filter post is: " + err.message);
@@ -265,7 +265,7 @@ router.get('/getPosts/:cat/:page', function(req, res, next) {
 });
 
 /**
-@api {get} /posts/:userId/:page Retrieves user specific posts by page
+@api {get} /posts/user/:userId?page=page_no Retrieves user specific posts by page
 @apiName GetUserPost
 @apiGroup Posts
 @apiSuccess {json} posts Array of post
@@ -345,11 +345,11 @@ router.get('/getPosts/:cat/:page', function(req, res, next) {
 ]
 */
 
-router.get('/:userId/:page', function(req, res, next) {
+router.get('/user/:userId', function(req, res, next) {
     console.log('user posts being retrieved');
     var query = { 'postedBy': req.params.userId };
     var projection = {};
-    var options = { skip: (Number(req.params.page) - 1) * 4, limit: 3 };
+    var options = { skip: (Number(req.query.page) - 1) * 4, limit: 3 };
     postsApi.find(query, projection, options, function(err, data) {
         if (err) {
             console.log('error retrieving user posts is ' + err);
@@ -367,7 +367,7 @@ router.get('/:userId/:page', function(req, res, next) {
 });
 
 /**
-@api {get} /posts/getAllPosts/:category/:flaged/:sortBy/:page Retrieves all filtered posts by page
+@api {get} /posts/filtered?category=cat&flaged=true&sortBy=field&page=page_no Retrieves all filtered posts by page
 @apiName GetFilteredPosts
 @apiGroup Posts
 @apiSuccess {json} posts Array of post
@@ -447,17 +447,17 @@ router.get('/:userId/:page', function(req, res, next) {
 ]
 */
 
-router.get('/getAllPosts/:category/:flaged/:sortBy/:page', function(req, res, next) {
+router.get('/filtered', function(req, res, next) {
     var count;
-    if (req.params.flaged == 1) {
+    if (req.query.flaged == 1) {
         count = 1;
     } else {
         count = 0;
     }
 
     console.log(count);
-    var query = { catType: req.params.category, flagCount: { $gte: count } };
-    var options = { 'skip': req.params.page - 1, 'limit': 10, 'sort': { sortBy: 1 } };
+    var query = { catType: req.query.category, flagCount: { $gte: count } };
+    var options = { 'skip': req.query.page - 1, 'limit': 10, 'sort': { sortBy: 1 } };
     postsApi.find(query, {}, options, function(err, data) {
         if (err) {
             res.send(err.message);
@@ -468,7 +468,7 @@ router.get('/getAllPosts/:category/:flaged/:sortBy/:page', function(req, res, ne
 });
 
 /**
-@api {put} /posts/like/:postId Increment like count
+@api {put} /posts/:postId/likes Increment like count
 @apiName PutLikes
 @apiGroup Posts
 @apiSuccess {Number} likeCount count of likes after increment
@@ -477,8 +477,8 @@ router.get('/getAllPosts/:category/:flaged/:sortBy/:page', function(req, res, ne
 5
 */
 
-router.put('/like/:postId', function(req, res, next) {
-    data = { _id: req.params.postid };
+router.put('/:postId/likes', function(req, res, next) {
+    data = { _id: req.params.postId };
     toData = { $inc: { 'likeCount': 1 } };
     postsApi.findAndUpdate(data, toData, false, function(err, data) {
         if (err) {
@@ -504,7 +504,7 @@ router.put('/like/:postId', function(req, res, next) {
 });
 
 /**
-@api {put} /posts/unlike/:postId Increment unlike count
+@api {put} /posts/:postId/unlikes Increment unlike count
 @apiName PutUnLikes
 @apiGroup Posts
 @apiSuccess {Number} unlikeCount count of unlikes after increment
@@ -513,8 +513,8 @@ router.put('/like/:postId', function(req, res, next) {
 3
 */
 
-router.put('/unlike/:postid', function(req, res, next) {
-    data = { _id: req.params.postid };
+router.put('/:postId/unlikes', function(req, res, next) {
+    data = { _id: req.params.postId };
     toData = { $inc: { 'unlikecount': 1 } };
     postsApi.findAndUpdate(data, toData, false, function(err, data) {
         if (err) {
@@ -584,8 +584,8 @@ router.put('/unlike/:postid', function(req, res, next) {
   }
 ]
 */
-router.get('/:postid', function(req, res, next) {
-    var query = { '_id': req.params.postid };
+router.get('/:postId', function(req, res, next) {
+    var query = { '_id': req.params.postId };
     var projection = { comments: { $slice: [0, 2] } };
     //var options={sort:{comments.commentedOn:-1}};
     postsApi.findOne(query, projection, {}, function(err, data) {
@@ -604,7 +604,7 @@ router.get('/:postid', function(req, res, next) {
 });
 
 /**
-@api {put} /posts/:postId Delete single post
+@api {delete} /posts/:postId Delete single post
 @apiName DeletePost
 @apiGroup Posts
 @apiSuccess {json} delResult Deletion result
@@ -616,7 +616,7 @@ router.get('/:postid', function(req, res, next) {
 }
 */
 
-router.put('/:postId', function(req, res, next) {
+router.delete('/:postId', function(req, res, next) {
     var query = { '_id': req.params.postId };
     postsApi.remove(query, function(err, data) {
         if (err) {
@@ -630,7 +630,7 @@ router.put('/:postId', function(req, res, next) {
 });
 
 /**
-@api {post} /posts/comment
+@api {post} /posts/:postId/comments
 @apiName PostComment
 @apiGroup Posts
 @apiSuccess {json} post post withe updated comments
@@ -689,8 +689,8 @@ router.put('/:postId', function(req, res, next) {
 ] 
 */
 
-router.post('/comment', function(req, res, next) {
-    var query = { '_id': req.body._id };
+router.post('/:postId/comments', function(req, res, next) {
+    var query = { '_id': req.params.postId };
     var toData = { $push: { comments: req.body.comment }, $inc: { commentcount: 1 } };
 
     postsApi.findAndUpdate(query, toData, {}, function(err, data) {
@@ -720,7 +720,7 @@ router.post('/comment', function(req, res, next) {
 });
 
 /**
-@api {get} /posts/comments/:postId/:page Retrieves all comments of a specific post
+@api {get} /posts/:postId/comments?page=page_no Retrieves all comments of a specific post
 @apiName GetComments
 @apiGroup Posts
 @apiSuccess {json} comments post with updated comments
@@ -740,7 +740,7 @@ router.post('/comment', function(req, res, next) {
 ]
 */
 
-router.get('/comments/:postId/:page', function(req, res, next) {
+router.get('/:postId/comments', function(req, res, next) {
     query = { '_id': req.params.postId };
     projection = { comments: { $slice: [(Number(req.params.page) - 1) * 2, 2] } };
     //options={sortBy:{comments.commentedOn:-1}};

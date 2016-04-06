@@ -21,6 +21,16 @@ module.exports.insert = function(data, callback) {
     });
 };
 
+module.exports.remove = function(data, callback) {
+    users.remove(data, function(err, data) {
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, data);
+        }
+    });
+};
+
 
 module.exports.find = function(data, projection, options, callback) {
     data = data || {};

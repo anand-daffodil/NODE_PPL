@@ -1,7 +1,7 @@
 [
   {
-    "type": "put",
-    "url": "/categories/delete/:catId",
+    "type": "delete",
+    "url": "/categories/:catId",
     "title": "Delete specified category",
     "name": "DeleteCategories",
     "group": "Categories",
@@ -39,7 +39,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/categories.js",
+    "filename": "NODE_PPL/routes/categories.js",
     "groupTitle": "Categories"
   },
   {
@@ -82,12 +82,12 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/categories.js",
+    "filename": "NODE_PPL/routes/categories.js",
     "groupTitle": "Categories"
   },
   {
-    "type": "put",
-    "url": "/categories/insert",
+    "type": "post",
+    "url": "/categories",
     "title": "Insert a new category",
     "name": "InsertCategory",
     "group": "Categories",
@@ -125,12 +125,12 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/categories.js",
+    "filename": "NODE_PPL/routes/categories.js",
     "groupTitle": "Categories"
   },
   {
     "type": "put",
-    "url": "/categories/update/:catId",
+    "url": "/categories/:catId",
     "title": "Update specified Category",
     "name": "UpdateCategories",
     "group": "Categories",
@@ -168,11 +168,11 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/categories.js",
+    "filename": "NODE_PPL/routes/categories.js",
     "groupTitle": "Categories"
   },
   {
-    "type": "put",
+    "type": "delete",
     "url": "/posts/:postId",
     "title": "Delete single post",
     "name": "DeletePost",
@@ -211,12 +211,12 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/posts.js",
+    "filename": "NODE_PPL/routes/posts.js",
     "groupTitle": "Posts"
   },
   {
     "type": "get",
-    "url": "/posts/getPosts/:page",
+    "url": "/posts?page=page_no",
     "title": "Retrieve all posts by pages",
     "name": "GetAllPosts",
     "group": "Posts",
@@ -254,12 +254,12 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/posts.js",
+    "filename": "NODE_PPL/routes/posts.js",
     "groupTitle": "Posts"
   },
   {
     "type": "get",
-    "url": "/posts/getPosts/:cat/:page",
+    "url": "/posts/bycategory?cat=category&page=page_no",
     "title": "Retrieve all posts by category and by pages",
     "name": "GetAllPostsByCategory",
     "group": "Posts",
@@ -297,12 +297,12 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/posts.js",
+    "filename": "NODE_PPL/routes/posts.js",
     "groupTitle": "Posts"
   },
   {
     "type": "get",
-    "url": "/posts/comments/:postId/:page",
+    "url": "/posts/:postId/comments?page=page_no",
     "title": "Retrieves all comments of a specific post",
     "name": "GetComments",
     "group": "Posts",
@@ -340,12 +340,12 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/posts.js",
+    "filename": "NODE_PPL/routes/posts.js",
     "groupTitle": "Posts"
   },
   {
     "type": "get",
-    "url": "/posts/getAllPosts/:category/:flaged/:sortBy/:page",
+    "url": "/posts/filtered?category=cat&flaged=true&sortBy=field&page=page_no",
     "title": "Retrieves all filtered posts by page",
     "name": "GetFilteredPosts",
     "group": "Posts",
@@ -383,7 +383,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/posts.js",
+    "filename": "NODE_PPL/routes/posts.js",
     "groupTitle": "Posts"
   },
   {
@@ -426,12 +426,12 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/posts.js",
+    "filename": "NODE_PPL/routes/posts.js",
     "groupTitle": "Posts"
   },
   {
     "type": "get",
-    "url": "/posts/:userId/:page",
+    "url": "/posts/user/:userId?page=page_no",
     "title": "Retrieves user specific posts by page",
     "name": "GetUserPost",
     "group": "Posts",
@@ -469,12 +469,12 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/posts.js",
+    "filename": "NODE_PPL/routes/posts.js",
     "groupTitle": "Posts"
   },
   {
     "type": "post",
-    "url": "/posts/registerPost",
+    "url": "/posts/",
     "title": "Insert a new post",
     "name": "InsertPost",
     "group": "Posts",
@@ -512,12 +512,12 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/posts.js",
+    "filename": "NODE_PPL/routes/posts.js",
     "groupTitle": "Posts"
   },
   {
     "type": "post",
-    "url": "/posts/comment",
+    "url": "/posts/:postId/comments",
     "title": "",
     "name": "PostComment",
     "group": "Posts",
@@ -555,12 +555,12 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/posts.js",
+    "filename": "NODE_PPL/routes/posts.js",
     "groupTitle": "Posts"
   },
   {
     "type": "put",
-    "url": "/posts/like/:postId",
+    "url": "/posts/:postId/likes",
     "title": "Increment like count",
     "name": "PutLikes",
     "group": "Posts",
@@ -598,12 +598,12 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/posts.js",
+    "filename": "NODE_PPL/routes/posts.js",
     "groupTitle": "Posts"
   },
   {
     "type": "put",
-    "url": "/posts/unlike/:postId",
+    "url": "/posts/:postId/unlikes",
     "title": "Increment unlike count",
     "name": "PutUnLikes",
     "group": "Posts",
@@ -641,12 +641,12 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/posts.js",
+    "filename": "NODE_PPL/routes/posts.js",
     "groupTitle": "Posts"
   },
   {
     "type": "get",
-    "url": "/users/favourites/:userId",
+    "url": "/users/:userId/favourites",
     "title": "Retrieve favourite posts",
     "name": "GetFavourites",
     "group": "Users",
@@ -677,12 +677,12 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/users.js",
+    "filename": "NODE_PPL/routes/users.js",
     "groupTitle": "Users"
   },
   {
     "type": "get",
-    "url": "/users/userInfo/:userId",
+    "url": "/users/:userId",
     "title": "User detail",
     "name": "GetUser",
     "group": "Users",
@@ -720,12 +720,12 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/users.js",
+    "filename": "NODE_PPL/routes/users.js",
     "groupTitle": "Users"
   },
   {
-    "type": "get",
-    "url": "/users/verifyUser/:email/:verificationCode",
+    "type": "put",
+    "url": "/users/verifyUser?email=email&verificationCode=code",
     "title": "Verify user",
     "name": "GetVerificationCode",
     "group": "Users",
@@ -757,7 +757,7 @@
     },
     "description": "<p>verification code to update the verification status, if user is verified, redirected to resetPassword page</p>",
     "version": "0.0.0",
-    "filename": "routes/users.js",
+    "filename": "NODE_PPL/routes/users.js",
     "groupTitle": "Users"
   },
   {
@@ -800,12 +800,12 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/users.js",
+    "filename": "NODE_PPL/routes/users.js",
     "groupTitle": "Users"
   },
   {
-    "type": "put",
-    "url": "/users/favourites/markFav",
+    "type": "post",
+    "url": "/users/:userId/favourites",
     "title": "Mark favourite posts",
     "name": "PutFavouritesMark",
     "group": "Users",
@@ -836,12 +836,12 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/users.js",
+    "filename": "NODE_PPL/routes/users.js",
     "groupTitle": "Users"
   },
   {
     "type": "put",
-    "url": "/users/favourites/unmarkFav",
+    "url": "/users/:userId/favourites",
     "title": "unMark favourite posts",
     "name": "PutFavouritesUnmark",
     "group": "Users",
@@ -872,12 +872,12 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/users.js",
+    "filename": "NODE_PPL/routes/users.js",
     "groupTitle": "Users"
   },
   {
     "type": "put",
-    "url": "/users/updateInfo/:userId",
+    "url": "/users/:userId",
     "title": "Update user detail",
     "name": "PutUserDetail",
     "group": "Users",
@@ -915,12 +915,12 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/users.js",
+    "filename": "NODE_PPL/routes/users.js",
     "groupTitle": "Users"
   },
   {
     "type": "post",
-    "url": "/users/register",
+    "url": "/users",
     "title": "Register new user",
     "name": "RegisterUser",
     "group": "Users",
@@ -959,7 +959,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/users.js",
+    "filename": "NODE_PPL/routes/users.js",
     "groupTitle": "Users"
   },
   {
@@ -1003,7 +1003,7 @@
     },
     "description": "<p>Verification mail sent to the user with a link to update the verification status, if user is verified then user is redirected to resetPassword page.</p>",
     "version": "0.0.0",
-    "filename": "routes/users.js",
+    "filename": "NODE_PPL/routes/users.js",
     "groupTitle": "Users"
   },
   {
@@ -1046,7 +1046,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/users.js",
+    "filename": "NODE_PPL/routes/users.js",
     "groupTitle": "Users"
   },
   {
@@ -1089,7 +1089,7 @@
       }
     },
     "version": "0.0.0",
-    "filename": "routes/users.js",
+    "filename": "NODE_PPL/routes/users.js",
     "groupTitle": "Users"
   }
 ]

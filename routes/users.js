@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 });
 
 /**
-@api {post} /users/register Register new user
+@api {post} /users Register new user
 @apiName RegisterUser
 @apiGroup Users
 @apiDescription After successful registration send mail to the user
@@ -21,7 +21,7 @@ router.get('/', function(req, res, next) {
 true
 */
 
-router.post('/register', function(req, res, next) {
+router.post('/', function(req, res, next) {
     var data = req.body;
     usersApi.insert(data, function(err, data) {
         if (err) {
@@ -84,11 +84,11 @@ router.post('/login',
                 }
             }
             console.log("..logged in on server ");
-        });
     });
+});
 
 /**
-@api {get} /users/verifyUser/:email/:verificationCode Verify user
+@api {put} /users/verifyUser?email=email&verificationCode=code Verify user
 @apiName GetVerificationCode
 @apiGroup Users
 @apiSuccess {boolean} verified Verification Status/redirect to 'resetPassword' page
@@ -97,8 +97,8 @@ router.post('/login',
 if user is verified, redirected to resetPassword page
 */
 
-router.get('/verifyUser/:email/:verificationCode', function(req, res, next) {
-    var data = { "email": req.params.email, "verificationCode": req.params.verificationCode };
+router.put('/verifyUser', function(req, res, next) {
+    var data = { "email": req.query.email, "verificationCode": req.query.verificationCode };
     var toData = { $set: { verified: true } };
     options = {};
     console.log(data);
@@ -109,7 +109,7 @@ router.get('/verifyUser/:email/:verificationCode', function(req, res, next) {
         } else {
             console.log("verification done");
             //res.send(data);
-            res.redirect('/#/resetpassword/' + req.params.email);
+            res.redirect('/#/resetpassword/' + req.query.email);
         }
     });
 });
@@ -198,7 +198,7 @@ router.post('/resetPassword/:emailId', function(req, res, next) {
 });
 
 /**
-@api {get} /users/userInfo/:userId User detail 
+@api {get} /users/:userId User detail 
 @apiName GetUser
 @apiGroup Users
 @apiSuccess {json} user User information.
@@ -223,7 +223,7 @@ router.post('/resetPassword/:emailId', function(req, res, next) {
 }
 */
 
-router.get('/userInfo/:userId', function(req, res, next) {
+router.get('/:userId', function(req, res, next) {
     var query = { _id: req.params.userId };
     var projection = { _id: 0, password: 0, verified: 0, verificationCode: 0, resetPasswordToken: 0 };
     options = {};
@@ -243,7 +243,7 @@ router.get('/userInfo/:userId', function(req, res, next) {
 });
 
 /**
-@api {put} /users/updateInfo/:userId Update user detail 
+@api {put} /users/:userId Update user detail 
 @apiName PutUserDetail
 @apiGroup Users
 @apiSuccess {json} user updated user information.
@@ -268,7 +268,7 @@ router.get('/userInfo/:userId', function(req, res, next) {
 }
 */
 
-router.put('/updateInfo/:userId', function(req, res, next) {
+router.put('/:userId', function(req, res, next) {
     var query = { _id: req.params.userId };
     var toData = { $set: req.body };
     var options = {};
@@ -328,15 +328,15 @@ router.post('/changePassword', function(req, res, next) {
 });
 
 /**
-@api {put} /users/favourites/markFav Mark favourite posts
+@api {post} /users/:userId/favourites Mark favourite posts
 @apiName PutFavouritesMark
 @apiGroup Users
 @apiSuccess {json} user updated user favourites.
 @apiError {Error} error Error message
 */
 
-router.put('/favourites/markFav', function(req, res, next) {
-    var query = { '_id': req.body.userId };
+router.post('/:userId/favourites', function(req, res, next) {
+    var query = { '_id': req.params.userId };
     var toData = { $addToSet: { favourites: req.body.postId } };
     var options = {};
     usersApi.findAndUpdate(query, toData, options, function(err, data) {
@@ -357,15 +357,15 @@ router.put('/favourites/markFav', function(req, res, next) {
 });
 
 /**
-@api {put} /users/favourites/unmarkFav unMark favourite posts
+@api {put} /users/:userId/favourites unMark favourite posts
 @apiName PutFavouritesUnmark
 @apiGroup Users
 @apiSuccess {json} user updated user favourites.
 @apiError {Error} error Error message
 */
 
-router.put('/favourites/unmarkFav', function(req, res, next) {
-    var query = { '_id': req.body.userId };
+router.delete('/:userId/favourites', function(req, res, next) {
+    var query = { '_id': req.params.userId };
     var toData = { $set: { $pull: { favourites: { $eq: req.body.postId } } } };
     options = { upsert: true };
     usersApi.findAndUpdate(query, toData, options, function(err, data) {
@@ -388,14 +388,14 @@ router.put('/favourites/unmarkFav', function(req, res, next) {
 });
 
 /**
-@api {get} /users/favourites/:userId Retrieve favourite posts
+@api {get} /users/:userId/favourites Retrieve favourite posts
 @apiName GetFavourites
 @apiGroup Users
 @apiSuccess {json} favourites Array of favourite post.
 @apiError {Error} error Error message
 */
 
-router.get('/favourites/:userId', function(req, res, next) {
+router.get('/:userId/favourites', function(req, res, next) {
     console.log("...fav...1");
 
     var query = { '_id': req.params.userId };

@@ -37,7 +37,7 @@ router.get('/', function(req, res, next) {
 });
 
 /**
- *@api {put} /categories/insert Insert a new category
+ *@api {post} /categories Insert a new category
  *@apiName InsertCategory
  *@apiGroup Categories
  *@apiSuccess {JSON} category new created category object
@@ -52,7 +52,7 @@ router.get('/', function(req, res, next) {
 }
  */
 
-router.put('/insert', function(req, res, next) {
+router.post('/', function(req, res, next) {
     var category = req.body;
     categoriesApi.insert(category, function(err, data) {
         if (err) {
@@ -66,7 +66,7 @@ router.put('/insert', function(req, res, next) {
 });
 
 /**
- *@api {put} /categories/update/:catId Update specified Category
+ *@api {put} /categories/:catId Update specified Category
  *@apiName UpdateCategories
  *@apiGroup Categories
  *@apiSuccess {JSON} category update information on category object
@@ -80,7 +80,7 @@ router.put('/insert', function(req, res, next) {
 }
  */
 
-router.put('/update/:catId', function(req, res, next) {
+router.put('/:catId', function(req, res, next) {
     var query = { '_id': req.params.catId };
     var toData = { $set: req.body };
     options = {};
@@ -98,7 +98,7 @@ router.put('/update/:catId', function(req, res, next) {
 });
 
 /**
- *@api {put} /categories/delete/:catId Delete specified category
+ *@api {delete} /categories/:catId Delete specified category
  *@apiName DeleteCategories
  *@apiGroup Categories
  *@apiSuccess {JSON} category deletion information on category object
@@ -111,7 +111,7 @@ router.put('/update/:catId', function(req, res, next) {
 }
  */
 
-router.put('/delete/:catId', function(req, res, next) {
+router.delete('/:catId', function(req, res, next) {
     categoriesApi.remove({ '_id': req.params.catId }, function(err, data) {
         if (err) {
             console.log('error deleting category');
