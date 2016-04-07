@@ -39,7 +39,7 @@ define({ "api": [
       }
     },
     "version": "0.0.0",
-    "filename": "NODE_PPL/routes/categories.js",
+    "filename": "routes/categories.js",
     "groupTitle": "Categories"
   },
   {
@@ -82,7 +82,7 @@ define({ "api": [
       }
     },
     "version": "0.0.0",
-    "filename": "NODE_PPL/routes/categories.js",
+    "filename": "routes/categories.js",
     "groupTitle": "Categories"
   },
   {
@@ -125,7 +125,7 @@ define({ "api": [
       }
     },
     "version": "0.0.0",
-    "filename": "NODE_PPL/routes/categories.js",
+    "filename": "routes/categories.js",
     "groupTitle": "Categories"
   },
   {
@@ -168,7 +168,7 @@ define({ "api": [
       }
     },
     "version": "0.0.0",
-    "filename": "NODE_PPL/routes/categories.js",
+    "filename": "routes/categories.js",
     "groupTitle": "Categories"
   },
   {
@@ -211,7 +211,7 @@ define({ "api": [
       }
     },
     "version": "0.0.0",
-    "filename": "NODE_PPL/routes/posts.js",
+    "filename": "routes/posts.js",
     "groupTitle": "Posts"
   },
   {
@@ -254,7 +254,7 @@ define({ "api": [
       }
     },
     "version": "0.0.0",
-    "filename": "NODE_PPL/routes/posts.js",
+    "filename": "routes/posts.js",
     "groupTitle": "Posts"
   },
   {
@@ -297,7 +297,7 @@ define({ "api": [
       }
     },
     "version": "0.0.0",
-    "filename": "NODE_PPL/routes/posts.js",
+    "filename": "routes/posts.js",
     "groupTitle": "Posts"
   },
   {
@@ -340,7 +340,7 @@ define({ "api": [
       }
     },
     "version": "0.0.0",
-    "filename": "NODE_PPL/routes/posts.js",
+    "filename": "routes/posts.js",
     "groupTitle": "Posts"
   },
   {
@@ -383,7 +383,7 @@ define({ "api": [
       }
     },
     "version": "0.0.0",
-    "filename": "NODE_PPL/routes/posts.js",
+    "filename": "routes/posts.js",
     "groupTitle": "Posts"
   },
   {
@@ -426,12 +426,12 @@ define({ "api": [
       }
     },
     "version": "0.0.0",
-    "filename": "NODE_PPL/routes/posts.js",
+    "filename": "routes/posts.js",
     "groupTitle": "Posts"
   },
   {
     "type": "get",
-    "url": "/posts/user/:userId?page=page_no",
+    "url": "/posts/user?userId=userId&page=page_no",
     "title": "Retrieves user specific posts by page",
     "name": "GetUserPost",
     "group": "Posts",
@@ -469,7 +469,7 @@ define({ "api": [
       }
     },
     "version": "0.0.0",
-    "filename": "NODE_PPL/routes/posts.js",
+    "filename": "routes/posts.js",
     "groupTitle": "Posts"
   },
   {
@@ -512,7 +512,7 @@ define({ "api": [
       }
     },
     "version": "0.0.0",
-    "filename": "NODE_PPL/routes/posts.js",
+    "filename": "routes/posts.js",
     "groupTitle": "Posts"
   },
   {
@@ -555,7 +555,7 @@ define({ "api": [
       }
     },
     "version": "0.0.0",
-    "filename": "NODE_PPL/routes/posts.js",
+    "filename": "routes/posts.js",
     "groupTitle": "Posts"
   },
   {
@@ -598,7 +598,7 @@ define({ "api": [
       }
     },
     "version": "0.0.0",
-    "filename": "NODE_PPL/routes/posts.js",
+    "filename": "routes/posts.js",
     "groupTitle": "Posts"
   },
   {
@@ -641,7 +641,7 @@ define({ "api": [
       }
     },
     "version": "0.0.0",
-    "filename": "NODE_PPL/routes/posts.js",
+    "filename": "routes/posts.js",
     "groupTitle": "Posts"
   },
   {
@@ -677,7 +677,7 @@ define({ "api": [
       }
     },
     "version": "0.0.0",
-    "filename": "NODE_PPL/routes/users.js",
+    "filename": "routes/users.js",
     "groupTitle": "Users"
   },
   {
@@ -720,7 +720,7 @@ define({ "api": [
       }
     },
     "version": "0.0.0",
-    "filename": "NODE_PPL/routes/users.js",
+    "filename": "routes/users.js",
     "groupTitle": "Users"
   },
   {
@@ -757,7 +757,7 @@ define({ "api": [
     },
     "description": "<p>verification code to update the verification status, if user is verified, redirected to resetPassword page</p>",
     "version": "0.0.0",
-    "filename": "NODE_PPL/routes/users.js",
+    "filename": "routes/users.js",
     "groupTitle": "Users"
   },
   {
@@ -800,7 +800,7 @@ define({ "api": [
       }
     },
     "version": "0.0.0",
-    "filename": "NODE_PPL/routes/users.js",
+    "filename": "routes/users.js",
     "groupTitle": "Users"
   },
   {
@@ -836,7 +836,7 @@ define({ "api": [
       }
     },
     "version": "0.0.0",
-    "filename": "NODE_PPL/routes/users.js",
+    "filename": "routes/users.js",
     "groupTitle": "Users"
   },
   {
@@ -872,7 +872,7 @@ define({ "api": [
       }
     },
     "version": "0.0.0",
-    "filename": "NODE_PPL/routes/users.js",
+    "filename": "routes/users.js",
     "groupTitle": "Users"
   },
   {
@@ -915,7 +915,7 @@ define({ "api": [
       }
     },
     "version": "0.0.0",
-    "filename": "NODE_PPL/routes/users.js",
+    "filename": "routes/users.js",
     "groupTitle": "Users"
   },
   {
@@ -959,7 +959,7 @@ define({ "api": [
       }
     },
     "version": "0.0.0",
-    "filename": "NODE_PPL/routes/users.js",
+    "filename": "routes/users.js",
     "groupTitle": "Users"
   },
   {
@@ -1003,7 +1003,7 @@ define({ "api": [
     },
     "description": "<p>Verification mail sent to the user with a link to update the verification status, if user is verified then user is redirected to resetPassword page.</p>",
     "version": "0.0.0",
-    "filename": "NODE_PPL/routes/users.js",
+    "filename": "routes/users.js",
     "groupTitle": "Users"
   },
   {
@@ -1046,7 +1046,7 @@ define({ "api": [
       }
     },
     "version": "0.0.0",
-    "filename": "NODE_PPL/routes/users.js",
+    "filename": "routes/users.js",
     "groupTitle": "Users"
   },
   {
@@ -1089,7 +1089,7 @@ define({ "api": [
       }
     },
     "version": "0.0.0",
-    "filename": "NODE_PPL/routes/users.js",
+    "filename": "routes/users.js",
     "groupTitle": "Users"
   }
 ] });
