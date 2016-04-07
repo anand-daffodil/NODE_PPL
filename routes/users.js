@@ -87,6 +87,13 @@ router.post('/login',
     });
 });
 
+router.get('/logout', function(req, res, next) {
+    //req.logout();
+    //console.log(req.logout());
+    //res.redirect('/#/login');
+    res.send(true);
+});
+
 /**
 @api {put} /users/verifyUser?email=email&verificationCode=code Verify user
 @apiName GetVerificationCode

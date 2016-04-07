@@ -265,7 +265,7 @@ router.get('/bycategory', function(req, res, next) {
 });
 
 /**
-@api {get} /posts/user/:userId?page=page_no Retrieves user specific posts by page
+@api {get} /posts/user?userId=userId&page=page_no Retrieves user specific posts by page
 @apiName GetUserPost
 @apiGroup Posts
 @apiSuccess {json} posts Array of post
@@ -345,7 +345,7 @@ router.get('/bycategory', function(req, res, next) {
 ]
 */
 
-router.get('/user/:userId', function(req, res, next) {
+router.get('/user', function(req, res, next) {
     console.log('user posts being retrieved');
     var query = { 'postedBy': req.params.userId };
     var projection = {};
