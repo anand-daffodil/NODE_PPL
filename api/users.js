@@ -36,14 +36,38 @@ module.exports.find = function(data, projection, options, callback) {
     data = data || {};
     projection = projection || {};
     options = options || {};
-    users.findOne(data, projection, options, function(err, data) {
-        if (err) {
-            callback(err, null);
-        } else {
-            console.log("user found " + data);
-            callback(null, data);
-        }
-    });
+    users.find(data, projection, options)
+    .populate('favourites')
+    .exec(function(err, data) {
+            if (err) {
+                console.log("error finding users");
+                callback(err, null);
+            } else {
+                console.log(data);
+                callback(null, data);
+            }
+
+        }) ;
+};
+
+module.exports.findOne = function(data, projection, options, callback) {
+    data = data || {};
+    projection = projection || {};
+    options = options || {};
+    users.findOne(data, projection, options)
+    .populate('favourites')
+    .exec(function(err, data) {
+            if (err) {
+                console.log("error finding users");
+                console.log(err.message);
+                callback(err, null);
+            } else {
+                console.log("user found n callback");
+                console.log(data);
+                callback(null, data);
+            }
+
+        }) ;
 };
 
 module.exports.findAndUpdate = function(data, to_data, options, callback) {

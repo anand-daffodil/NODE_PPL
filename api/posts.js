@@ -19,7 +19,7 @@ module.exports.findOne = function(query, projection, options, callback) {
     query = query || {};
     projection = projection || {};
     options = options || {};
-    posts.find(query, projection, options)
+    posts.findOne(query, projection, options)
         .populate('postedBy')
         .exec(function(err, data) {
             if (err) {
@@ -60,14 +60,20 @@ module.exports.findAndUpdate = function(data, toData, options, callback) {
     data = data || {};
     toData = toData || {};
     options = options || {};
+    console.log('data');
+    console.log(data);
+    console.log('toData');
+    console.log(toData);
     posts.update(data, toData, options, function(err, data) {
         if (err) {
             console.log("error updating posts");
             console.log(err.message);
             callback(err, null);
         } else {
-            console.log("data updated successfully");
-            console.log(data);
+            if(data.nModified){
+              console.log("data updated successfully");
+              console.log(data);  
+            }
             callback(null, data);
         }
     });

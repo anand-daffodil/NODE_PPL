@@ -13,12 +13,12 @@ var postSchema = mongoose.Schema({
         comment: String,
         commentedOn: Date
     }], //[]field -  creatorId, creatorName, comment, commentedOn
-    commentCount: Number,
+    commentcount: Number,
     likeBy: Array, //[]users
-    likeCount: Number,
-    unlikeCount: Number,
+    likecount: Number,
+    unlikecount: Number,
     image: String,
-    flagCount: Number,
+    flagcount: Number,
     flagBy: Array //[] users
 
 }, { collection: "posts" });

@@ -10,7 +10,7 @@ passport.use(new localStrategy({
     function(username, password, done) {
         console.log("..here in username", username);
         console.log("..here in password", password);
-        usersApi.find({ 'email': username }, function(err, user) {
+        usersApi.findOne({ 'email': username }, {}, {}, function(err, user) {
             console.log(user);
             if (err) {
                 return done(err);

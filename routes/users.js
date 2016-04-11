@@ -70,7 +70,7 @@ router.post('/login',
     function(req, res, next) {
         console.log("entered next callback");
         var data = req.body;
-        usersApi.find(data, { _id: 1, username: 1, email: 1 }, function(err, data) {
+        usersApi.findOne(data, { _id: 1, username: 1, email: 1 }, {}, function(err, data) {
             if (err) {
                 console.log("error login/retrieving info");
                 res.send(err.message);
@@ -234,7 +234,7 @@ router.get('/:userId', function(req, res, next) {
     var query = { _id: req.params.userId };
     var projection = { _id: 0, password: 0, verified: 0, verificationCode: 0, resetPasswordToken: 0 };
     options = {};
-    usersApi.find(query, projection, options, function(err, data) {
+    usersApi.findOne(query, projection, options, function(err, data) {
         if (err) {
             console.log('error finding userinfo' + err);
             res.send(err.message);
@@ -291,7 +291,7 @@ router.put('/:userId', function(req, res, next) {
             var query = { _id: req.params.userId };
             var projection = { _id: 0, password: 0, verified: 0, verificationCode: 0, resetPasswordToken: 0 };
             var options = {};
-            usersApi.find(query, projection, options, function(err, data) {
+            usersApi.findOne(query, projection, options, function(err, data) {
                 if (err) {
                     console.log('error finding userInfo' + err);
                     res.send(false);
@@ -409,7 +409,7 @@ router.get('/:userId/favourites', function(req, res, next) {
     var projection = { 'favourites': 1, '_id': 0 };
     options = {};
     console.log("...fav...2");
-    usersApi.find(query, projection, options, function(err, data) {
+    usersApi.findOne(query, projection, options, function(err, data) {
         console.log("...fav...3");
         if (err) {
             console.log('error retrieving favourites');
@@ -418,7 +418,7 @@ router.get('/:userId/favourites', function(req, res, next) {
         } else {
             console.log('favourites found');
             console.log(data);
-            res.send(data);
+            res.send(data.favourites);
         }
     });
 });

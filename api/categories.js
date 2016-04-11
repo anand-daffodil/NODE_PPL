@@ -26,8 +26,8 @@ module.exports.insert = function(data, callback) {
     });
 };
 
-module.exports.update = function(data, projection, options, callback) {
-    categories.update(data, projection, options, function(err, data) {
+module.exports.update = function(data, toData, options, callback) {
+    categories.update(data, toData, options, function(err, data) {
         if (err) {
             callback(err, null);
         } else {

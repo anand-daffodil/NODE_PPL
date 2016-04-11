@@ -81,6 +81,7 @@ router.post('/', function(req, res, next) {
  */
 
 router.put('/:catId', function(req, res, next) {
+    console.log(req.body);
     var query = { '_id': req.params.catId };
     var toData = { $set: req.body };
     options = {};

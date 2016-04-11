@@ -455,8 +455,8 @@ router.get('/filtered', function(req, res, next) {
         count = 0;
     }
 
-    console.log(count);
-    var query = { catType: req.query.category, flagCount: { $gte: count } };
+    console.log(count+" catType "+req.query.catType);
+    var query = { catType: req.query.catType, flagcount: { $gte: count } };
     var options = { 'skip': req.query.page - 1, 'limit': 10, 'sort': { sortBy: 1 } };
     postsApi.find(query, {}, options, function(err, data) {
         if (err) {
@@ -479,24 +479,25 @@ router.get('/filtered', function(req, res, next) {
 
 router.put('/:postId/likes', function(req, res, next) {
     data = { _id: req.params.postId };
-    toData = { $inc: { 'likeCount': 1 } };
-    postsApi.findAndUpdate(data, toData, false, function(err, data) {
+    toData = { "$inc": { 'likecount': 1 } };
+    postsApi.findAndUpdate(data, toData, {}, function(err, data) {
         if (err) {
             console.log(err.message);
             res.send(false);
         } else {
             console.log(data);
             if (data.nModified) {
-                postsApi.findOne({ '_id': req.params.postid }, { 'likeCount': 1 }, {}, function(err, data) {
+                postsApi.findOne({ '_id': req.params.postId }, { 'likecount': 1 }, {}, function(err, data) {
                     if (err) {
+                        console.log(err);
                         res.send(false);
                     } else {
-                        console.log('like count: ' + data + data.likeCount);
-                        res.send(data.likeCount);
+                        console.log('like count: ' + data + data.likecount);
+                        res.send(data);
                     }
                 });
             } else {
-                res.send(false);
+              res.send(false);
             }
 
         }
@@ -523,11 +524,11 @@ router.put('/:postId/unlikes', function(req, res, next) {
         } else {
             console.log(data);
             if (data.nModified) {
-                postsApi.findOne({ _id: req.params.postid }, { unlikecount: 1 }, {}, function(err, data) {
+                postsApi.findOne({ _id: req.params.postId }, { unlikecount: 1 }, {}, function(err, data) {
                     if (err) {
                         res.send(false);
                     } else {
-                        res.send(data.unlikecount);
+                        res.send(data);
                     }
                 });
             } else {
@@ -587,8 +588,10 @@ router.put('/:postId/unlikes', function(req, res, next) {
 router.get('/:postId', function(req, res, next) {
     var query = { '_id': req.params.postId };
     var projection = { comments: { $slice: [0, 2] } };
+    // var projection = {};
     //var options={sort:{comments.commentedOn:-1}};
-    postsApi.findOne(query, projection, {}, function(err, data) {
+    var options = {}
+    postsApi.findOne(query, projection, options, function(err, data) {
         if (err) {
             console.log(err.message);
             res.send(false);
@@ -699,6 +702,7 @@ router.post('/:postId/comments', function(req, res, next) {
             res.send(false);
         } else {
             console.log('comment updated');
+            req.body.page = (req.body.page?req.body.page:1);
             var projection = { 'password': 0, comments: { $slice: [0, req.body.page * 2] } };
             //var options={sort:{comments.commentedOn:-1};
             postsApi.findOne(query, projection, {}, function(err, data) {
@@ -751,7 +755,7 @@ router.get('/:postId/comments', function(req, res, next) {
         } else {
             if (data) {
                 console.log('data is ' + data);
-                res.send(data);
+                res.send(data.comments);
 
             } else {
                 console.log('no comments found');

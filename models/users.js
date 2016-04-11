@@ -12,7 +12,7 @@ var userSchema = mongoose.Schema({
     verified: { type: Boolean, default: false },
     resetPasswordToken: { type: String, default: null },
     role: { type: String, default: "user" }, //user or admin
-    favourites: { type: Array }
+    favourites: [{ type: mongoose.Schema.Types.ObjectId, ref:'Post' }]
 }, { collection: 'users' });
 
 module.exports = mongoose.model('user', userSchema);
